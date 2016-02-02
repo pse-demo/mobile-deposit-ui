@@ -4,8 +4,8 @@ def mobileDepositUiImage = null
 stage 'build'
 node('docker-cloud') {
     //docker.withServer('tcp://127.0.0.1:1234'){ //run the following steps on this Docker host
+            sh 'ls -la'
             docker.image('kmadel/maven:3.3.3-jdk-8').inside('-v /data:/data') { //use this image as the build environment
-                sh 'ls -la'
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/cloudbees/mobile-deposit-ui.git']]])
                 sh 'mvn -Dmaven.repo.local=/data/mvn/repo clean package'
 
